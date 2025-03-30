@@ -1,0 +1,44 @@
+/* Reset dasar */
+* {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+ 
+ /* Pastikan body memiliki tinggi minimal */
+ body {
+     display: flex;
+     flex-direction: column;
+     min-height: 100vh;
+     font-family: Arial, sans-serif;
+ }
+ 
+ /* Menghindari navbar menutupi konten */
+ .container {
+     flex: 1;
+     max-width: 80%;
+     margin: 100px auto 50px; /* Memberi jarak dari navbar ke bawah */
+     padding: 20px;
+     background-color: #f9f9f9;
+     border-radius: 10px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ }
+ 
+ /* Navbar tetap di atas */
+ header {
+     position: fixed;
+     top: 0;
+     width: 100%;
+     z-index: 1050;
+ }
+ 
+ /* Footer tetap di bawah */
+ footer {
+     background: #205781;
+     color: white;
+     text-align: center;
+     padding: 15px 0;
+     margin-top: auto;
+     width: 100%;
+ }
+ 
