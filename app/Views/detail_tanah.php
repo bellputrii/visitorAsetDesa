@@ -1,119 +1,164 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Aset Tanah</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
-    <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 20px;
-          padding: 0;
-          background-color: #f4f4f4;
-          }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Aset Tanah</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
-          .container {
-          max-width: 800px;
-          margin: auto;
-          padding: 20px;
-          background: linear-gradient(135deg, #206789, #98D2C0); /* Gradasi biru tua ke hijau toska */
-          border-radius: 12px;
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          color: white;
-          }
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
 
-          h1 {
-          text-align: center;
-          color: white;
-          }
+    .container {
+      padding: 100px 20px 40px 20px;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
 
-          .info {
-          margin: 15px 0;
-          font-size: 16px;
-          }
+    .card {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      color: #333;
+    }
 
-          .info strong {
-          color: #FDD835; /* Kuning keemasan untuk kontras */
-          }
+    h1 {
+      text-align: center;
+      color: #206789;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
 
-          .map-container {
-          width: 100%;
-          height: 300px;
-          margin-top: 20px;
-          border-radius: 8px;
-          overflow: hidden;
-          border: 2px solid white; /* Bingkai putih agar lebih estetik */
-          }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-          .btn-back {
-          display: block;
-          text-align: center;
-          margin-top: 20px;
-          padding: 10px;
-          background: #FDD835; /* Kuning keemasan */
-          color: #333;
-          text-decoration: none;
-          border-radius: 5px;
-          font-weight: bold;
-          }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+      font-size: 14px;
+    }
 
-          .btn-back:hover {
-          background: #FFC107; /* Kuning yang lebih terang */
-          }
+    th {
+      background-color: #f0f6f9;
+      color: #206789;
+      font-weight: bold;
+    }
 
-    </style>
+    .map-container {
+      width: 100%;
+      height: 300px;
+      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #206789;
+    }
+
+    .btn-back {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 16px;
+      background: #206789;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
+
+    .btn-back:hover {
+      background: #174a6f;
+    }
+
+    .info img {
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 2px solid #206789;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .info strong {
+      color: #206789;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Detail Aset Tanah</h1>
-        <div class="info"><strong>ID Aset:</strong> <?= esc($aset['id_aset'] ?? '-') ?></div>
-        <div class="info"><strong>Alamat:</strong> <?= esc($aset['alamat'] ?? '-') ?></div>
-        <div class="info"><strong>Luas:</strong> <?= esc($aset['luas'] ?? '-') ?> m²</div>
-        <div class="info"><strong>Kegunaan:</strong> <?= esc($aset['kegunaan'] ?? '-') ?></div>
-        <div class="info"><strong>Harga Satuan:</strong> Rp <?= number_format($aset['harga_satuan'] ?? 0, 0, ',', '.') ?></div>
-        <div class="info"><strong>Harga Total:</strong> Rp <?= number_format($aset['harga_total'] ?? 0, 0, ',', '.') ?></div>
-        <div class="info"><strong>Harga Sewa Satuan:</strong> Rp <?= number_format($aset['harga_sewa_satuan'] ?? 0, 0, ',', '.') ?></div>
-        <div class="info"><strong>Harga Sewa Total:</strong> Rp <?= number_format($aset['harga_sewa_total'] ?? 0, 0, ',', '.') ?></div>
-        <div class="info"><strong>Jarak ke Sumber Air:</strong> <?= esc($aset['jarak_sumber_air'] ?? '-') ?> meter</div>
-        <div class="info"><strong>Jarak ke Jalan Utama:</strong> <?= esc($aset['jarak_jalan_utama'] ?? '-') ?> meter</div>
+    
+  <!-- Header -->
+  <?= $this->include('templates/header'); ?>
 
+  <div class="container">
+    <div class="card">
+      <h1>Detail Aset Tanah</h1>
+
+      <table>
+        <tr><th>ID Aset</th><td><?= esc($aset['id_aset'] ?? '-') ?></td></tr>
+        <tr><th>Alamat</th><td><?= esc($aset['alamat'] ?? '-') ?></td></tr>
+        <tr><th>Luas</th><td><?= esc($aset['luas'] ?? '-') ?> m²</td></tr>
+        <tr><th>Kegunaan</th><td><?= esc($aset['kegunaan'] ?? '-') ?></td></tr>
+        <tr><th>Harga Satuan</th><td>Rp <?= number_format($aset['harga_satuan'] ?? 0, 0, ',', '.') ?></td></tr>
+        <tr><th>Harga Total</th><td>Rp <?= number_format($aset['harga_total'] ?? 0, 0, ',', '.') ?></td></tr>
+        <tr><th>Harga Sewa Satuan</th><td>Rp <?= number_format($aset['harga_sewa_satuan'] ?? 0, 0, ',', '.') ?></td></tr>
+        <tr><th>Harga Sewa Total</th><td>Rp <?= number_format($aset['harga_sewa_total'] ?? 0, 0, ',', '.') ?></td></tr>
+        <tr><th>Jarak ke Sumber Air</th><td><?= esc($aset['jarak_sumber_air'] ?? '-') ?> meter</td></tr>
+        <tr><th>Jarak ke Jalan Utama</th><td><?= esc($aset['jarak_jalan_utama'] ?? '-') ?> meter</td></tr>
         <?php if (!empty($aset['latitude']) && !empty($aset['longitude'])): ?>
-            <div class="info"><strong>Lokasi:</strong> <?= esc($aset['latitude']) ?>, <?= esc($aset['longitude']) ?></div>
-            <div id="map" class="map-container"></div>
-        <?php else: ?>
-            <p style="color: red;">Lokasi tidak tersedia</p>
+          <tr><th>Koordinat</th><td><?= esc($aset['latitude']) ?>, <?= esc($aset['longitude']) ?></td></tr>
         <?php endif; ?>
+      </table>
 
-        <?php if (!empty($aset['foto'])): ?>
-            <div class="info">
-                <strong>Foto Aset:</strong><br>
-                <img src="<?= base_url('uploads/' . $aset['foto']) ?>" alt="Foto Aset" style="max-width: 100%; height: auto; border-radius: 8px;">
-            </div>
-        <?php endif; ?>
+      <?php if (!empty($aset['foto'])): ?>
+        <div class="info">
+          <strong>Foto Aset:</strong><br>
+          <img src="<?= base_url('uploads/' . $aset['foto']) ?>" alt="Foto Aset">
+        </div>
+      <?php endif; ?>
 
-        <a href="<?= base_url('aset_tanah') ?>" class="btn-back">Kembali ke Daftar Aset</a>
+      <?php if (!empty($aset['latitude']) && !empty($aset['longitude'])): ?>
+        <div id="map" class="map-container"></div>
+      <?php else: ?>
+        <p style="color: #206789; margin-top: 10px;">Lokasi tidak tersedia</p>
+      <?php endif; ?>
+
+      <a href="<?= base_url('aset_tanah') ?>" class="btn-back">Kembali ke Daftar Aset</a>
     </div>
+  </div>
 
-    <script>
-        function initMap() {
-            var latitude = <?= esc($aset['latitude'] ?? 0) ?>;
-            var longitude = <?= esc($aset['longitude'] ?? 0) ?>;
-            var mapOptions = {
-                center: { lat: latitude, lng: longitude },
-                zoom: 15
-            };
-            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-            var marker = new google.maps.Marker({
-                position: { lat: latitude, lng: longitude },
-                map: map,
-                title: "Lokasi Aset"
-            });
-        }
+  <!-- Footer -->
+  <?= $this->include('templates/footer'); ?>
 
-        <?php if (!empty($aset['latitude']) && !empty($aset['longitude'])): ?>
-            window.onload = initMap;
-        <?php endif; ?>
-    </script>
+  <script>
+    function initMap() {
+      var latitude = <?= esc($aset['latitude'] ?? 0) ?>;
+      var longitude = <?= esc($aset['longitude'] ?? 0) ?>;
+      var mapOptions = {
+        center: { lat: latitude, lng: longitude },
+        zoom: 15
+      };
+      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      var marker = new google.maps.Marker({
+        position: { lat: latitude, lng: longitude },
+        map: map,
+        title: "Lokasi Aset"
+      });
+    }
+
+    <?php if (!empty($aset['latitude']) && !empty($aset['longitude'])): ?>
+      window.onload = initMap;
+    <?php endif; ?>
+  </script>
 </body>
 </html>

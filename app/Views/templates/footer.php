@@ -1,6 +1,6 @@
-<footer class="text-white text-center py-4 mt-5" style="background: #205781;">
+<footer class="fixed text-white text-center py-4 mt-5" style="background: #205781;">
     <div class="container">
-        <p class="mb-2">&copy; 2024 iAset. All Rights Reserved.</p>
+        <p class="mb-2">&copy; 2025 SIMA. All Rights Reserved.</p>
         <p class="small">Sistem Manajemen Aset Desa Karangtengah | Dibangun untuk transparansi dan efisiensi.</p>
 
         <!-- Media Sosial -->

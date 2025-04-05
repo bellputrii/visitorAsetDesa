@@ -1,93 +1,113 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Aset Gedung & Bangunan</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 20vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: black;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .card {
-          background: linear-gradient(135deg, #206789, #98D2C0); /* Dari biru tua ke hijau toska */
-          border-radius: 12px;
-          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-          padding: 20px;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          color: white;
-          }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Aset Gedung & Bangunan</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-          .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-          background: linear-gradient(135deg, #174A6F, #78C5AD); /* Biru lebih gelap ke hijau lebih cerah */
-          }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
 
-          .card h3 {
-          font-size: 20px;
-          font-weight: bold;
-          margin-bottom: 10px;
-          }
+    .header {
+      background-color: #206789;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
 
-          .card p {
-          font-size: 14px;
-          margin: 5px 0;
-          color: #fff;
-          }
-    </style>
+    .hero {
+      padding: 100px 20px 40px 20px; /* biar kebawah dikit */
+      text-align: center;
+      background-color: #eaf4f7;
+    }
+
+    .hero h1 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .table-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    /* Sticky header tabel */
+    thead th {
+      position: sticky;
+      top: 0;
+      background-color: #212529;
+      color: white;
+      z-index: 1;
+    }
+  </style>
 </head>
-<body>
-     
-    <div class="hero">
-        <div class="overlay"></div>
-        <div class="hero-content">
-            <h1>Data Aset Gedung dan Bangunan</h1>
-            <p>Informasi lengkap mengenai aset tanah di Desa Karangtengah.</p>
-        </div>
-    </div>
 
-    <div class="container">
-        <?php if (empty($aset_gedung)): ?>
-            <p style="color: red;">⚠️ Tidak ada data aset gedung & bangunan yang ditemukan.</p>
-        <?php else: ?>
-            <div class="grid">
-                <?php foreach ($aset_gedung as $aset): ?>
-                    <div class="card">
-                        <h3><?= esc($aset['nama_aset'] ?? 'Nama tidak tersedia') ?></h3>
-                        <p><strong>ID Aset:</strong> <?= esc($aset['id_aset'] ?? 'N/A') ?></p>
-                        <p><strong>Kode Aset:</strong> <?= esc($aset['kode_aset'] ?? 'N/A') ?></p>
-                        <p><strong>NUP Aset:</strong> <?= esc($aset['nup_aset'] ?? 'N/A') ?></p>
-                        <p><strong>Kategori:</strong> <?= esc($aset['kategori_aset'] ?? 'Tidak diketahui') ?></p>
-                        <p><strong>Tahun Pengadaan:</strong> <?= esc($aset['tahun_pengadaan'] ?? 'N/A') ?></p>
-                        <p><strong>Perolehan:</strong> <?= esc($aset['perolehan'] ?? 'Tidak tersedia') ?></p>
-                        <p><strong>QR Code:</strong> <?= esc($aset['qr_code'] ?? 'Tidak tersedia') ?></p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+<body>
+
+  <div class="header">
+    <?= $this->include('templates/header'); ?>
+  </div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Data Aset Gedung dan Bangunan</h1>
+      <p>Informasi lengkap mengenai aset gedung dan bangunan di Desa Karangtengah.</p>
     </div>
+  </div>
+
+  <div class="container mt-4">
+    <?php if (empty($aset_gedung)): ?>
+      <div class="alert alert-warning text-center" role="alert">
+        ⚠️ Tidak ada data aset gedung & bangunan yang ditemukan.
+      </div>
+    <?php else: ?>
+      <div class="table-container">
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>No</th>
+                <th>Nama Aset</th>
+                <th>Kode Aset</th>
+                <th>NUP Aset</th>
+                <th>Tahun Pengadaan</th>
+                <th>Perolehan</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <?php $no = 1; ?>
+              <?php foreach ($aset_gedung as $aset): ?>
+                <tr>
+                  <td><?= $no++ ?></td>
+                  <td><?= esc($aset['nama_aset'] ?? 'Nama tidak tersedia') ?></td>
+                  <td><?= esc($aset['kode_aset'] ?? '-') ?></td>
+                  <td><?= esc($aset['nup_aset'] ?? '-') ?></td>
+                  <td><?= esc($aset['tahun_pengadaan'] ?? '-') ?></td>
+                  <td><?= esc($aset['perolehan'] ?? '-') ?></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
+
+  <div class="footer">
+    <?= $this->include('templates/footer'); ?>
+  </div>
+
 </body>
 </html>
