@@ -101,7 +101,7 @@
     <div class="hero">
         <div class="overlay"></div>
         <div class="hero-content">
-            <h1>Selamat Datang di Desa Karangtengah</h1>
+            <h1>Selamat Datang di Sistem Informasi Manajemen Aset (SIMA) Desa Karangtengah</h1>
             <p>Jelajahi sistem manajemen aset desa yang inovatif dan transparan untuk meningkatkan kesejahteraan masyarakat.</p>
             <a href="<?php echo base_url('aset_desa'); ?>" class="btn btn-primary">Lihat Aset Desa</a>
         </div>

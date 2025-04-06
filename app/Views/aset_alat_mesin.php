@@ -26,7 +26,7 @@
     .table thead th {
         position: sticky;
         top: 0;
-        background-color: #212529;
+        background-color: #174a6f;
         color: #fff;
         z-index: 1;
     }

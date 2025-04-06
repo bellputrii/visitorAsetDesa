@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Detail Aset Tanah</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
     body {
@@ -140,24 +140,23 @@
   <!-- Footer -->
   <?= $this->include('templates/footer'); ?>
 
+  <!-- Leaflet Map Script -->
   <script>
-    function initMap() {
-      var latitude = <?= esc($aset['latitude'] ?? 0) ?>;
-      var longitude = <?= esc($aset['longitude'] ?? 0) ?>;
-      var mapOptions = {
-        center: { lat: latitude, lng: longitude },
-        zoom: 15
-      };
-      var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-      var marker = new google.maps.Marker({
-        position: { lat: latitude, lng: longitude },
-        map: map,
-        title: "Lokasi Aset"
-      });
-    }
-
     <?php if (!empty($aset['latitude']) && !empty($aset['longitude'])): ?>
-      window.onload = initMap;
+      document.addEventListener("DOMContentLoaded", function () {
+        var latitude = <?= esc($aset['latitude']) ?>;
+        var longitude = <?= esc($aset['longitude']) ?>;
+
+        var map = L.map('map').setView([latitude, longitude], 15);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([latitude, longitude]).addTo(map)
+        .bindPopup('<?= esc($aset['alamat'] ?? 'Alamat tidak tersedia') ?>')
+          .openPopup();
+      });
     <?php endif; ?>
   </script>
 </body>

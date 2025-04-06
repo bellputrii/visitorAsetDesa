@@ -39,14 +39,14 @@
       padding: 20px;
       background-color: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     }
 
     /* Sticky header tabel */
-    thead th {
+    .table thead th {
       position: sticky;
       top: 0;
-      background-color: #212529;
+      background-color: #174a6f;
       color: white;
       z-index: 1;
     }
