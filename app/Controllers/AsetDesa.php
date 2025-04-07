@@ -32,48 +32,104 @@ class AsetDesa extends Controller
             . view('templates/footer');
     }
 
+    // public function tanah()
+    // {
+    //     // Cek apakah model bekerja dengan baik
+    //     $data['aset_tanah'] = $this->tanahModel->findAll();
+
+    //     // Debugging: Cek apakah data ada atau tidak
+    //     if (empty($data['aset_tanah'])) {
+    //         return "Data kosong atau model tidak berfungsi!";
+    //     }
+
+    //     return view('aset_tanah', $data);
+    // }
+
+    // public function detail_tanah($id_aset)
+    // {
+    //     // Ambil data aset tanah berdasarkan ID
+    //     $aset = $this->tanahModel->where('id_aset', $id_aset)->first();
+
+    //     // Jika aset tidak ditemukan, redirect ke daftar aset dengan pesan error
+    //     if (!$aset) {
+    //         return redirect()->to('/aset_tanah')->with('error', 'Aset tidak ditemukan!');
+    //     }
+
+    //     // Tampilkan halaman detail
+    //     return view('detail_tanah', ['aset' => $aset]);
+    // }
+    
     public function tanah()
     {
-        // Cek apakah model bekerja dengan baik
-        $data['aset_tanah'] = $this->tanahModel->findAll();
-
-        // Debugging: Cek apakah data ada atau tidak
-        if (empty($data['aset_tanah'])) {
-            return "Data kosong atau model tidak berfungsi!";
-        }
-
+        $data['aset_tanah'] = $this->tanahModel->getAsetTanahJoin();
+    
         return view('aset_tanah', $data);
     }
-
+    
     public function detail_tanah($id_aset)
     {
-        // Ambil data aset tanah berdasarkan ID
-        $aset = $this->tanahModel->where('id_aset', $id_aset)->first();
-
-        // Jika aset tidak ditemukan, redirect ke daftar aset dengan pesan error
+        $aset = $this->tanahModel->getDetailById($id_aset);
+    
         if (!$aset) {
             return redirect()->to('/aset_tanah')->with('error', 'Aset tidak ditemukan!');
         }
-
-        // Tampilkan halaman detail
+    
         return view('detail_tanah', ['aset' => $aset]);
     }
-
+    
     public function gedung()
     {
-        $asetModel = new \App\Models\AsetModel();
-        $data['aset_gedung'] = $asetModel->where('kategori_aset', 'Gedung & Bangunan')->findAll();
-
+        $data['aset_gedung'] = $this->gedungModel->getAsetGedungJoin();
+    
         return view('aset_gedung_bangunan', $data);
     }
 
+
+
+    // public function gedung()
+    // {
+    //     $asetModel = new \App\Models\AsetModel();
+    //     $detailModel = new \App\Models\AsetGedungBangunanModel();
+    
+    //     $asets = $asetModel->where('kategori_aset', 'Gedung & Bangunan')->findAll();
+    
+    //     foreach ($asets as &$aset) {
+    //         $detail = $detailModel->where('id_aset', $aset['id_aset'])->first();
+    //         $aset['detail'] = $detail;
+    //     }
+    
+    //     $data['aset_gedung'] = $asets;
+    
+    //     return view('aset_gedung_bangunan', $data);
+    // }
+    
+
+
+    // public function asetAlatMesin()
+    // {
+    //     $model = new AsetModel();
+    //     $detailModel = new \App\Models\AsetPeralatanMesinModel();
+    
+    //     $asets = $model->where('kategori_aset', 'Peralatan & Mesin')->findAll();
+    
+    //     // Loop buat nyisipin detail
+    //     foreach ($asets as &$aset) {
+    //         $detail = $detailModel->where('id_aset', $aset['id_aset'])->first();
+    //         $aset['detail'] = $detail;
+    //     }
+    
+    //     $data['aset_alat_mesin'] = $asets;
+    
+    //     return view('aset_alat_mesin', $data);
+    // }
+    
     public function asetAlatMesin()
     {
-        $model = new AsetModel();
-        $data['aset_alat_mesin'] = $model->where('kategori_aset', 'Peralatan & Mesin')->findAll();
-        
+        $data['aset_alat_mesin'] = $this->mesinModel->getAsetAlatMesinJoin();
+    
         return view('aset_alat_mesin', $data);
     }
+
 
     // public function detail_gedung($id_aset)
     // {

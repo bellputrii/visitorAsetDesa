@@ -7,10 +7,21 @@ use CodeIgniter\Model;
 class AsetTanahModel extends Model
 {
     protected $table = 'aset_tanah';
-    protected $primaryKey = 'id_aset';
-    protected $allowedFields = [
-        'id_aset', 'luas', 'alamat', 'kegunaan', 'latitude', 'longitude',
-        'harga_satuan', 'harga_total', 'harga_sewa_satuan', 'harga_sewa_total',
-        'jarak_sumber_air', 'jarak_jalan_utama', 'foto'
-    ];
+
+    public function getAsetTanahJoin()
+    {
+        return $this->select('asets.*, aset_tanah.*')
+                    ->join('asets', 'asets.id_aset = aset_tanah.id_aset')
+                    ->where('asets.deleted_at', null)
+                    ->findAll();
+    }
+
+    public function getDetailById($id)
+    {
+        return $this->select('asets.*, aset_tanah.*')
+                    ->join('asets', 'asets.id_aset = aset_tanah.id_aset')
+                    ->where('asets.id_aset', $id)
+                    ->where('asets.deleted_at', null)
+                    ->first();
+    }
 }
