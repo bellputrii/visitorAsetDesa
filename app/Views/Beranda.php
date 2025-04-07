@@ -103,7 +103,16 @@
         <div class="hero-content">
             <h1>Selamat Datang di Sistem Informasi Manajemen Aset (SIMA) Desa Karangtengah</h1>
             <p>Jelajahi sistem manajemen aset desa yang inovatif dan transparan untuk meningkatkan kesejahteraan masyarakat.</p>
-            <a href="<?php echo base_url('aset_desa'); ?>" class="btn btn-primary">Lihat Aset Desa</a>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Lihat Aset Desa
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="<?php echo base_url('/aset_tanah'); ?>">Aset Tanah</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url('/aset_alat_mesin'); ?>">Aset Peralatan & Mesin</a></li>
+                    <li><a class="dropdown-item" href="<?php echo base_url('/aset_gedung_bangunan'); ?>">Aset Gedung & Bangunan</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="content-section">

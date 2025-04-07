@@ -109,13 +109,23 @@
 
 <!-- Navbar scroll effect -->
 <script>
-    window.addEventListener("scroll", function () {
-        var navbar = document.querySelector(".navbar");
-        if (window.scrollY > 50) {
-            navbar.classList.add("navbar-scrolled");
-        } else {
-            navbar.classList.remove("navbar-scrolled");
-        }
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownToggle = document.getElementById('navbarDropdown');
+        const dropdownMenu = dropdownToggle.nextElementSibling;
+
+        dropdownToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Toggle class show pada dropdown-menu
+            dropdownMenu.classList.toggle('show');
+        });
+
+        // Menutup dropdown jika klik di luar area dropdown
+        document.addEventListener('click', function (event) {
+            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
     });
 </script>
 
